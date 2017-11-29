@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+    >
+    <quatja.com.vorolay.VoronoiView
+        android:id="@+id/voronoi_view"
+        android:layout_width="548dp"
+        android:layout_height="548dp"
+        android:layout_margin="10dp"
+        app:border_color="@color/cardview_light_background"
+        app:border_round="true"
+        app:border_width="85"
+        app:show_border="false"
+        app:generation_type="ordered"
+         />
+
+</RelativeLayout>

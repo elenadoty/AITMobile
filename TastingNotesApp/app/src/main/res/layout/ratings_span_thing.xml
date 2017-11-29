@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ogaclejapan.arclayout.ArcLayout
+    android:id="@+id/arc_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:arc_origin="center"
+    app:arc_color="#4D039959"
+    app:arc_radius="168dp"
+    app:arc_axisRadius="120dp"
+    app:arc_freeAngle="false"
+    app:arc_reverseAngle="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageButton
+        android:id="@+id/rating1"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:gravity="center"
+        android:scaleType="fitXY"
+        android:src="@drawable/nothappybob"
+        android:background="#4D039959"
+        app:arc_origin="center"
+        />
+
+    <ImageButton
+        android:id="@+id/rating2"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:gravity="center"
+        android:src="@drawable/nothappy"
+        android:scaleType="fitXY"
+        android:background="#4D039959"
+        app:arc_origin="center"
+        />
+
+    <ImageButton
+        android:id="@+id/rating3"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:gravity="center"
+        android:src="@drawable/indifferent"
+        android:scaleType="fitXY"
+        android:background="#4D039959"
+        app:arc_origin="center"
+        />
+
+    <ImageButton
+        android:id="@+id/rating4"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:gravity="center"
+        android:src="@drawable/happy"
+        android:background="#4D039959"
+        android:scaleType="fitXY"
+        app:arc_origin="center"
+        />
+
+    <ImageButton
+        android:id="@+id/rating5"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:gravity="center"
+        android:src="@drawable/veryhappy"
+        android:background="#4D039959"
+        android:scaleType="fitXY"
+        app:arc_origin="center"
+        />
+
+</com.ogaclejapan.arclayout.ArcLayout>

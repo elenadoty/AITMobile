@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_details"
+    >
+
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/imageViewDetail"
+        android:src="@drawable/gourmet_food"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
+    <me.grantland.widget.AutofitTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/imageViewDetail"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="NAME"
+        android:maxLines="1"
+        android:textSize="44sp"
+        android:id="@+id/tvFragmentName"/>
+
+    <me.grantland.widget.AutofitTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvFragmentDateLocation"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="Date, at location"
+        android:maxLines="2"
+        android:layout_below="@+id/tvFragmentName"
+        android:padding="10dp"
+        android:textSize="22sp"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/linearStars"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/star1"
+            android:src="@drawable/star_icon_filled"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/star2"
+            android:src="@drawable/star_icon_filled"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/star3"
+            android:src="@drawable/star_icon_filled"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/star4"
+            android:src="@drawable/star_icon_filled"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/star5"
+            android:src="@drawable/star_icon_filled"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:id="@+id/tvFragmentBody"
+        android:text="the body of the note will go here"
+        android:maxLines="8"
+        android:textSize="20sp"
+        android:layout_below="@id/tvFragmentDateLocation"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/linearStars"/>
+</RelativeLayout>

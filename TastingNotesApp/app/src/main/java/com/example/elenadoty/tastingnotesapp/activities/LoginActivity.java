@@ -55,7 +55,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static com.example.elenadoty.tastingnotesapp.R.id.google_sign_in_button;
 
 /**
  * A login screen that offers login via email/password.
@@ -77,8 +76,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     AutoCompleteTextView mEmailView;
     @BindView(R.id.etEnterPassword)
     EditText mPasswordView;
-    @BindView(google_sign_in_button)
-    SignInButton googleSignIn;
     @BindView(R.id.sign_in_button)
     Button signIn;
     @BindView(R.id.register_button)
@@ -106,7 +103,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if(currentUser != null){
-            //don't show login screen
+            Intent loggedIn = new Intent(LoginActivity.this, MainScreen.class);
+            startActivity(loggedIn);
         }
     }
 
@@ -336,19 +334,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                                     fbUser.updateProfile(
                                             new UserProfileChangeRequest.Builder().
-                                                    setDisplayName(mEmail).build()
+                                                    setDisplayName(usernameFromEmail(mEmail)).build()
                                     );
 
 
-                                    Toast.makeText(LoginActivity.this,
-                                            "Registration ok", Toast.LENGTH_SHORT).show();
-
-                                    //transition to new screen
+                                    Intent loggedIn = new Intent(LoginActivity.this, MainScreen.class);
+                                    startActivity(loggedIn);
 
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Error: "+
                                             task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     //reinstate login screen
+                                    showProgress(false);
                                 }
                             }
                         });
@@ -362,13 +359,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()) {
-                    //transition to different screen
-
+                    Intent loggedIn = new Intent(LoginActivity.this, MainScreen.class);
+                    startActivity(loggedIn);
                 } else {
                     Toast.makeText(LoginActivity.this,
                             "Error: "+task.getException().getMessage(),
                             Toast.LENGTH_SHORT).show();
                     //reinstate login screen
+                    showProgress(false);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -379,9 +377,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Toast.LENGTH_SHORT).show();
 
                 e.printStackTrace();
+                showProgress(false);
             }
         });
     }
 
+    private String usernameFromEmail(String email) {
+        if (email.contains("@")) {
+            return email.split("@")[0];
+        } else {
+            return email;
+        }
+    }
 }
 

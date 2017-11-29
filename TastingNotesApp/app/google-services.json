@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "400335922668",
+    "firebase_url": "https://tastingnotes-b10cd.firebaseio.com",
+    "project_id": "tastingnotes-b10cd",
+    "storage_bucket": "tastingnotes-b10cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400335922668:android:74c2862547c4b0d3",
+        "android_client_info": {
+          "package_name": "com.example.elenadoty.tastingnotesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "400335922668-ll3alilevp10k5994oqrq0vp3acfdb0u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.elenadoty.tastingnotesapp",
+            "certificate_hash": "52370679e1652618548e0cb66824b8a3dfc74b21"
+          }
+        },
+        {
+          "client_id": "400335922668-h0qca18fueql01id8ln3cmln3hm9sbi9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdMMCVp4BJ4ON73y9EJYhOfJMQk-Uu4dA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "400335922668-h0qca18fueql01id8ln3cmln3hm9sbi9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

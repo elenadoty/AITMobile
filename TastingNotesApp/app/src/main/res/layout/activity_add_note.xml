@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:animateLayoutChanges="true"
+    android:id="@+id/coordinatorForAdd"
+    >
+
+
+
+
+    <include layout="@layout/content_add_note"
+        android:id="@+id/contentAddNote"/>
+
+    <include layout="@layout/ratings_span_thing"
+        android:id="@+id/ratingsIncluded"
+        android:visibility="gone"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fragmentFabDoneAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:scaleY="1.5"
+        android:scaleX="1.5"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/fragment_done_icon" />
+
+</android.support.design.widget.CoordinatorLayout>
