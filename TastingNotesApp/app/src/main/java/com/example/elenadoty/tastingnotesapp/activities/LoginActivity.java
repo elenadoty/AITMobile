@@ -49,6 +49,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.roger.catloadinglibrary.CatLoadingView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     private View mProgressView;
+    private CatLoadingView myCatView;
     private View mLoginFormView;
     private FirebaseAuth firebaseAuth;
 
@@ -99,6 +101,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        myCatView = new CatLoadingView();
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -251,18 +255,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            /*mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
-            });
+            });*/
+            if(show)
+                myCatView.show(getSupportFragmentManager(), "");
+            else {
+                myCatView.dismiss();
+            }
+
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            //mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
@@ -337,9 +347,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                     setDisplayName(usernameFromEmail(mEmail)).build()
                                     );
 
-
-                                    Intent loggedIn = new Intent(LoginActivity.this, MainScreen.class);
-                                    startActivity(loggedIn);
+                                    LoginWithEmail(mEmail, mPassword);
 
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Error: "+

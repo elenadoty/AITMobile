@@ -28,7 +28,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login"
+            android:noHistory="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,11 +60,7 @@
             android:name=".activities.AddNoteActivity"
             android:label="@string/title_activity_add_note"
             android:theme="@style/AppTheme2" />
-        <activity android:name=".activities.ForumActivity" />
-        <activity
-            android:name=".activities.MyPostsActivity"
-            android:label="@string/title_activity_my_posts"
-            android:theme="@style/AppTheme"></activity>
+
     </application>
 
 </manifest>

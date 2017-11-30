@@ -142,6 +142,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                             DialogFragment newFragment = new DatePickerFragment();
                             newFragment.show(getFragmentManager(), "datePicker");
                             viewToAdd.setImageResource(R.drawable.prop_done_icon);
+                            viewToAdd.setEnabled(false);
                             break;
                         case 2:
                             //ratings
@@ -149,6 +150,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                             findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)0.1);
                             findViewById(R.id.ratingsIncluded).setVisibility(View.VISIBLE);
                             viewToAdd.setImageResource(R.drawable.prop_done_icon);
+                            viewToAdd.setEnabled(false);
                             break;
                         case 3:
                             //maps
@@ -166,23 +168,31 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                                 e.printStackTrace();
                             }
                             viewToAdd.setImageResource(R.drawable.prop_done_icon);
+                            viewToAdd.setEnabled(false);
+
                             break;
                         case 4:
                             //notes
                             android.support.v4.app.DialogFragment newNoteFragment = new AddNotesDialog();
                             newNoteFragment.show(getSupportFragmentManager(), "note_fragment");
                             viewToAdd.setImageResource(R.drawable.prop_done_icon);
+                            viewToAdd.setEnabled(false);
+
                             break;
                         case 0:
                             //name
                             android.support.v4.app.DialogFragment newNameFragment = new NameDialog();
                             newNameFragment.show(getSupportFragmentManager(), "name_fragment");
                             viewToAdd.setImageResource(R.drawable.prop_done_icon);
+                            viewToAdd.setEnabled(false);
+
                             break;
                         case 5:
                             //camera stuff
                             requestNeededPermission();
                             viewToAdd.setImageResource(R.drawable.prop_done_icon);
+                            viewToAdd.setEnabled(false);
+
                             break;
                         default:
                             break;

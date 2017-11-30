@@ -22,67 +22,24 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <fragment android:name="com.example.elenadoty.tastingnotesapp.activities.MyPostsActivity"
             android:id="@+id/postsRelativeLayout"
-            android:visibility="visible">
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:visibility="visible"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvWelcome"
-                android:text="@string/welcome"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:padding="10dp"
-                android:textSize="40sp"
-                />
-
-            <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/recyclerEntries"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/tvWelcome"
-                android:padding="20dp"
-                android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
-                />
-
-        </RelativeLayout>
-
-        <include layout="@layout/activity_maps"
+        <fragment class="com.google.android.gms.maps.MapFragment"
             android:id="@+id/include_map"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:visibility="gone"
             />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <fragment android:name="com.example.elenadoty.tastingnotesapp.activities.ForumActivity"
             android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:id="@+id/forumRelativeLayout"
-            android:visibility="gone">
-
-            <!--<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/recyclerEntriesForum"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
-                />
-                May be better/easier to have another activity
-                handle the forum stuff.
-                -->
-
-        </RelativeLayout>
+            android:visibility="gone"/>
 
     </FrameLayout>
 

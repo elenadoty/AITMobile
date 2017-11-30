@@ -28,24 +28,17 @@ import java.util.List;
  * Created by elenadoty on 11/23/17.
  */
 
-/*
-*
-* Some thoughts:
-* store all messages, filter based on user to display only user's
-* store all locations, filter based on user to display marker??
- */
+
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
 
     private Context context;
     private List<BaseEntry> entryList;
     private List<String> entryKeys;
-    private String uId;
     private int lastPosition = -1;
     private DatabaseReference entryRef;
 
-    public NoteAdapter(Context context, String uId) {
+    public NoteAdapter(Context context) {
         this.context = context;
-        this.uId = uId;
 
         entryList = new ArrayList<>();
         entryKeys = new ArrayList<>();
