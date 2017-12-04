@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,10 +61,8 @@ public class ForumActivity extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) { //
-                    //for (DataSnapshot childEventSnapshot : eventSnapshot.getChildren()) {
                         BaseEntry newEntry = eventSnapshot.getValue(BaseEntry.class);
-                        adapter.addNote(newEntry, dataSnapshot.getKey());
-                    //}
+                        adapter.addNote(newEntry, newEntry.getDatabaseID());
                 }
             }
 
@@ -74,7 +73,10 @@ public class ForumActivity extends Fragment {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) { //
+                    BaseEntry newEntry = eventSnapshot.getValue(BaseEntry.class);
+                    adapter.removePostByKey(newEntry.getDatabaseID());
+                }
             }
 
             @Override

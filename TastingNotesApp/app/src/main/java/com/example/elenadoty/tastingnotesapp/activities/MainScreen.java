@@ -47,8 +47,6 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
     DatabaseReference databaseReference;
     DatabaseReference locationReference;
     ArrayList<LatLng> markers = new ArrayList<>();
-    private NoteAdapter adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,46 +73,8 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initMarkerListener();
         findViewById(R.id.navigation_home).callOnClick();
 
-    }
-
-    private void initMarkerListener(){
-        //TODO use uid not display name
-        locationReference = database.getReference("locations").child(
-                FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-        // Attach a listener to read the data at our posts reference
-        locationReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Coordinates baseEntry = dataSnapshot.getValue(Coordinates.class);
-                LatLng location = new LatLng(baseEntry.getLatitude(),
-                        baseEntry.getLongitude());
-                markers.add(location);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                adapter.removePostByKey(dataSnapshot.getKey());
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override
@@ -166,7 +126,33 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
         //mMap.setMinZoomPreference(20);
     }
 
+    public void addMarker(LatLng markerToAdd){
+        markers.add(markerToAdd);
+        updateMapMarkers();
+    }
 
+    public void removeMarker(LatLng markerToRemove){
+        int toRemove = -1;
+        for(int i = 0; i < markers.size(); i ++){
+            if(markers.get(i).longitude == markerToRemove.longitude
+                    && markers.get(i).latitude == markerToRemove.latitude){
+                toRemove = i;
+            }
+        }
+        if(toRemove > -1) {
+            markers.remove(toRemove);
+        }
+        updateMapMarkers();
+    }
+
+    private void updateMapMarkers(){
+        if(mMap != null){
+            mMap.clear();
+            for (LatLng location: markers) {
+                mMap.addMarker(new MarkerOptions().position(location));
+            }
+        }
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -179,7 +165,6 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
                     findViewById(R.id.postsRelativeLayout).setVisibility(View.VISIBLE);
                     findViewById(R.id.forumRelativeLayout).setVisibility(View.GONE);
                     findViewById(R.id.include_map).setVisibility(View.GONE);
-                    //startActivity(new Intent(MainScreen.this, MyPostsActivity.class));
                     return true;
 
                 case R.id.navigation_dashboard:

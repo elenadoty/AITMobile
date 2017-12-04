@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.elenadoty.tastingnotesapp.R;
 import com.example.elenadoty.tastingnotesapp.adapter.NoteAdapter;
 import com.example.elenadoty.tastingnotesapp.data.BaseEntry;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +65,10 @@ public class MyPostsActivity extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 BaseEntry newEntry = dataSnapshot.getValue(BaseEntry.class);
-                adapter.addNote(newEntry, dataSnapshot.getKey());
+                adapter.addNote(newEntry, newEntry.getDatabaseID());
+                ((MainScreen)getContext()).addMarker(new LatLng(
+                        newEntry.getCoordinates().getLatitude(),
+                        newEntry.getCoordinates().getLongitude()));
             }
 
             @Override
@@ -74,7 +78,11 @@ public class MyPostsActivity extends Fragment {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                BaseEntry newEntry = dataSnapshot.getValue(BaseEntry.class);
+                adapter.removePostByKey(newEntry.getDatabaseID());
+                ((MainScreen)getContext()).removeMarker(new LatLng(
+                        newEntry.getCoordinates().getLatitude(),
+                        newEntry.getCoordinates().getLongitude()));
             }
 
             @Override

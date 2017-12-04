@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.elenadoty.tastingnotesapp.activities.DetailsActivity">
@@ -16,26 +17,43 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="10dp"
         >
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fragmentFabDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:visibility="gone"
-            android:scaleY="1.25"
-            android:scaleX="1.25"
-            app:srcCompat="@drawable/fragment_trash_can" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fragmentFabDone"
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/multiple_actions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:scaleY="1.25"
-            android:scaleX="1.25"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/fragment_done_icon" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            fab:fab_addButtonColorNormal="@color/fab1"
+            fab:fab_addButtonColorPressed="@color/blue_semi_transparent_pressed"
+            fab:fab_addButtonSize="normal"
+            fab:fab_icon="@drawable/toolbar_add_icon"
+            fab:fab_expandDirection="up"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/fragment_trash_can"
+                fab:fab_colorNormal="@color/fab1"
+                fab:fab_colorPressed="@color/blue_semi_transparent_pressed"
+                />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/check_icon"
+                fab:fab_colorNormal="@color/fab1"
+                fab:fab_colorPressed="@color/blue_semi_transparent_pressed"/>
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
     </LinearLayout>
 
 

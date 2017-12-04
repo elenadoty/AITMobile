@@ -77,19 +77,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //transition to details screen
+
                 Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra("entry_name", baseEntry.getNoteName());
-                intent.putExtra("entry_body", baseEntry.getNoteNotes());
-                intent.putExtra("entry_date", date);
-                intent.putExtra("entry_location", baseEntry.getPlaceName());
-                intent.putExtra("entry_rating", baseEntry.getNoteRating());
                 intent.putExtra("entry_id", baseEntry.getDatabaseID());
                 intent.putExtra("image_url", baseEntry.getImageURL());
 
                 ((MainScreen)context).startActivity(intent);
             }
         });
+
         holder.entryLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

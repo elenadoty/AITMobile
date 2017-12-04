@@ -78,7 +78,6 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         if (!getIntent().hasExtra("userID")) {
             finish();
         }
-        final String userID = getIntent().getStringExtra("userID");
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -101,17 +100,18 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    //uploadNote();
                     finish();
                 } else {
+
+                    String needed = "Need: ";
+                    if(newDate == null) needed += "Date. ";
+                    if(newName == null) needed += "Name. ";
+                    if(newCoords == null) needed += "Location. ";
+                    if(rating == 0) needed += "Rating. ";
+                    if(noteNotes == null) needed += "Notes.";
+
                     Snackbar.make(findViewById(R.id.contentAddNote),
-                            "Must enter all info.", Snackbar.LENGTH_SHORT).show();
-                    if(newDate == null) Log.d("not done", "date");
-                    if(newName == null) Log.d("not done", "name");
-                    if(newCoords == null) Log.d("not done", "coords");
-                    if(placeName == null) Log.d("not done", "place");
-                    if(rating == 0) Log.d("not done", "rating");
-                    if(noteNotes == null) Log.d("not done", "notes");
+                            "Must enter all info. " + needed, Snackbar.LENGTH_LONG).show();
 
                 }
             }
@@ -300,9 +300,8 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
 
         final String userID = getIntent().getStringExtra("userID");
 
-        //Log.d("imagestuff", "image url is: " + imageURL);
         BaseEntry addEntry = new BaseEntry(newName, noteNotes, newCoords, placeName,
-                newDate, 1, rating, UUID.randomUUID().toString(), imageURL);
+                newDate, 1, rating, UUID.randomUUID().toString(), imageURL, userID);
 
         databaseReference.child("posts").child(userID)
                 .child(addEntry.getDatabaseID()).setValue(addEntry);
@@ -313,7 +312,6 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
     }
 
     private void uploadImage() throws Exception{
-        if(imageAsBitmap == null) Log.d("imagedumb", "bitmap null");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         imageAsBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageInBytes = baos.toByteArray();

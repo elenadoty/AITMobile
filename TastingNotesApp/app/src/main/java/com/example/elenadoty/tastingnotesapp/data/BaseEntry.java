@@ -15,6 +15,7 @@ public class BaseEntry {
     private NoteDate noteDate;
     private int noteType;
     private Coordinates coordinates;
+    private String userID;
     private String placeName;
     private String databaseID;
     private String imageURL;
@@ -22,7 +23,7 @@ public class BaseEntry {
 
     public BaseEntry(String noteName, String noteNotes, Coordinates coordinates, String placeName,
                      NoteDate noteDate, int noteType, int noteRating,
-                     String databaseID, String imageURL) {
+                     String databaseID, String imageURL, String userID) {
         this.noteName = noteName;
         this.noteNotes = noteNotes;
         this.placeName = placeName;
@@ -32,6 +33,7 @@ public class BaseEntry {
         this.databaseID = databaseID;
         this.noteRating = noteRating;
         this.imageURL = imageURL;
+        this.userID = userID;
     }
 
     public BaseEntry() {}
@@ -111,5 +113,13 @@ public class BaseEntry {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }
