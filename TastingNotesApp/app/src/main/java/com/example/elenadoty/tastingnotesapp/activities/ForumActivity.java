@@ -44,7 +44,7 @@ public class ForumActivity extends Fragment {
     }
 
     private void createRecyclerView(View rootView) {
-        adapter = new NoteAdapter(getContext());
+        adapter = new NoteAdapter(getContext(), NoteAdapter.ALL_POSTS);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recyclerForumEntries);
 
@@ -60,7 +60,7 @@ public class ForumActivity extends Fragment {
         currentUserPostsReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) { //
+                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                         BaseEntry newEntry = eventSnapshot.getValue(BaseEntry.class);
                         adapter.addNote(newEntry, newEntry.getDatabaseID());
                 }
@@ -68,12 +68,16 @@ public class ForumActivity extends Fragment {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
+                    BaseEntry newEntry = eventSnapshot.getValue(BaseEntry.class);
+                    adapter.removePostByKey(newEntry.getDatabaseID());
+                    adapter.addNote(newEntry, newEntry.getDatabaseID());
+                }
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) { //
+                for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     BaseEntry newEntry = eventSnapshot.getValue(BaseEntry.class);
                     adapter.removePostByKey(newEntry.getDatabaseID());
                 }

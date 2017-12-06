@@ -111,6 +111,7 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
         findViewById(R.id.forumRelativeLayout).setVisibility(View.GONE);
         findViewById(R.id.include_map).setVisibility(View.VISIBLE);
 
+        //TODO: add markers for other people?
         for (LatLng location: markers) {
             mMap.addMarker(new MarkerOptions().position(location));
         }
@@ -125,8 +126,8 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
                 cameraPosition));*/
         //mMap.setMinZoomPreference(20);
     }
-
-    public void addMarker(LatLng markerToAdd){
+    //TODO: is this needed, and is it a problem??
+    public void addMapMarker(LatLng markerToAdd){
         markers.add(markerToAdd);
         updateMapMarkers();
     }

@@ -34,11 +34,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
     private Context context;
     private List<BaseEntry> entryList;
     private List<String> entryKeys;
-    private int lastPosition = -1;
+    public static final int MY_POSTS = 0;
+    public static final int ALL_POSTS = 1;
+    private int postsType;
     private DatabaseReference entryRef;
 
-    public NoteAdapter(Context context) {
+    public NoteAdapter(Context context, int postsType) {
         this.context = context;
+        this.postsType = postsType;
 
         entryList = new ArrayList<>();
         entryKeys = new ArrayList<>();
@@ -56,12 +59,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View newRow = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.note_row, parent, false);
+                        .inflate(R.layout.note_row, parent, false);
         return new ViewHolder(newRow);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+
         final BaseEntry baseEntry = entryList.get(position);
         holder.entryName.setText(baseEntry.getNoteName());
 
@@ -94,6 +98,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
 
             }
         });
+
+        switch (postsType){
+            case 0:
+                holder.tvUserName.setVisibility(View.GONE);
+                break;
+            case 1:
+                holder.tvUserName.setText(baseEntry.getUserName());
+                holder.tvUserName.setVisibility(View.VISIBLE);
+                break;
+            default: break;
+        }
+
     }
 
     public void removePost(int index) {
@@ -112,16 +128,24 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
         }
     }
 
+    public void removeAll(){
+        entryList = new ArrayList<>();
+        entryKeys = new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return entryList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         public ImageView rowImage;
         public TextView entryName;
         public TextView entryDate;
         public TextView entryLocation;
+        public TextView tvUserName;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -129,6 +153,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
             entryDate = itemView.findViewById(R.id.tvEntryDate);
             entryName = itemView.findViewById(R.id.tvEntryName);
             entryLocation = itemView.findViewById(R.id.tvEntryLocation);
+            tvUserName = itemView.findViewById(R.id.tvUserNameForum);
         }
     }
 }

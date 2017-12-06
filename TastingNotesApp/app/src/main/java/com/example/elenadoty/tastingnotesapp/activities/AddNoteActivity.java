@@ -59,14 +59,8 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
     DatabaseReference databaseReference;
     private GoogleApiClient mGoogleApiClient;
     final int PLACE_PICKER_REQUEST = 1001;
-    Coordinates newCoords;
-    static NoteDate newDate;
-    static String newName;
-    static int rating;
-    static String noteNotes;
-    static String placeName;
+    private static BaseEntry newEntry;
     static Bitmap imageAsBitmap;
-    static String imageURL;
 
     ImageButton rating1, rating2, rating3, rating4, rating5;
 
@@ -74,6 +68,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
+        newEntry = new BaseEntry();
 
         if (!getIntent().hasExtra("userID")) {
             finish();
@@ -93,27 +88,13 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(newDate != null && newName != null && newCoords != null
-                        && placeName != null && rating != 0 && noteNotes != null){
-                    try {
-                        uploadImage();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    finish();
-                } else {
-
-                    String needed = "Need: ";
-                    if(newDate == null) needed += "Date. ";
-                    if(newName == null) needed += "Name. ";
-                    if(newCoords == null) needed += "Location. ";
-                    if(rating == 0) needed += "Rating. ";
-                    if(noteNotes == null) needed += "Notes.";
-
-                    Snackbar.make(findViewById(R.id.contentAddNote),
-                            "Must enter all info. " + needed, Snackbar.LENGTH_LONG).show();
-
+                //TODO: check the note is complete, or set defaults
+                try {
+                    uploadImage();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                finish();
             }
         });
 
@@ -125,6 +106,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
     }
 
     private void dealWithVoronoi() {
+        //TODO: Clean this up?
         VoronoiView voronoiView = (VoronoiView) findViewById(R.id.voronoi_view);
         LayoutInflater layoutInflater = getLayoutInflater();
 
@@ -227,12 +209,24 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         }
     }
 
+    public static void addName(String newName){
+        newEntry.setNoteName(newName);
+    }
+
+    public static void addNotes(String notes){
+        newEntry.setNoteNotes(notes);
+    }
+
+    public static void addDate(NoteDate date){
+        newEntry.setNoteDate(date);
+    }
+
     private void setRatingOnClick() {
         rating1 = findViewById(R.id.rating1);
         rating1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rating = 1;
+                newEntry.setNoteRating(1);//rating = 1;
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -242,7 +236,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rating = 2;
+                newEntry.setNoteRating(2);//rating = 2;
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -252,7 +246,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rating = 3;
+                newEntry.setNoteRating(3);//rating = 3;
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -262,7 +256,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rating = 4;
+                newEntry.setNoteRating(4);//rating = 4;
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -272,7 +266,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rating = 5;
+                newEntry.setNoteRating(5);//rating = 5;
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -284,9 +278,9 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         if (requestCode == PLACE_PICKER_REQUEST ) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                placeName = place.getName().toString();
-                newCoords = new Coordinates
-                        (place.getLatLng().latitude, place.getLatLng().longitude);
+                newEntry.setPlaceName(place.getName().toString());
+                newEntry.setCoordinates(new Coordinates(place.getLatLng().latitude,
+                        place.getLatLng().longitude));
 
             }
         }
@@ -300,15 +294,16 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
 
         final String userID = getIntent().getStringExtra("userID");
 
-        BaseEntry addEntry = new BaseEntry(newName, noteNotes, newCoords, placeName,
-                newDate, 1, rating, UUID.randomUUID().toString(), imageURL, userID);
+        newEntry.setDatabaseID(UUID.randomUUID().toString());
+        newEntry.setUserID(userID);
+        newEntry.setUserName(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+
 
         databaseReference.child("posts").child(userID)
-                .child(addEntry.getDatabaseID()).setValue(addEntry);
-        databaseReference.child("locations").child(userID).child(addEntry.getDatabaseID())
-                .setValue(addEntry.getCoordinates());
-        databaseReference.child("dates").child(userID)
-                .setValue(addEntry.getNoteDate());
+                .child(newEntry.getDatabaseID()).setValue(newEntry);
+
+        //databaseReference.child("dates").child(userID)
+          //      .setValue(newEntry.getNoteDate());
     }
 
     private void uploadImage() throws Exception{
@@ -333,13 +328,12 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                imageURL = taskSnapshot.getDownloadUrl().toString();
+                newEntry.setImageURL(taskSnapshot.getDownloadUrl().toString());
                 uploadNote();
-                //Log.d("imagestuff", "download url is " + imageURL);
             }
         });
     }
+
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

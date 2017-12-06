@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -73,6 +72,24 @@
             android:layout_toRightOf="@id/linearlayoutforrow"
             android:layout_alignParentRight="true"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/linearlayoutforforum"
+            android:layout_below="@id/row_image"
+            android:visibility="visible"
+            android:gravity="center"
+            android:paddingTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USER NAME GOES HERE"
+                android:textSize="24sp"
+                android:id="@+id/tvUserNameForum"
+                />
+        </LinearLayout>
 
     </RelativeLayout>
 

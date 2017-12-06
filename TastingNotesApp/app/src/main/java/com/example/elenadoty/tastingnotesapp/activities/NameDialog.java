@@ -19,6 +19,7 @@ import com.example.elenadoty.tastingnotesapp.R;
  */
 
 public class NameDialog extends DialogFragment {
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -48,8 +49,8 @@ public class NameDialog extends DialogFragment {
                     public void onClick(View view) {
                         EditText editText = getDialog().findViewById(R.id.dialog_enterName);
                         if (!TextUtils.isEmpty(editText.getText())) {
-                            String newName = editText.getText().toString();
-                            AddNoteActivity.newName = newName;
+                            String name = editText.getText().toString();
+                            AddNoteActivity.addName(name);
                             dialog.dismiss();
 
                         } else {
@@ -61,4 +62,5 @@ public class NameDialog extends DialogFragment {
         });
         return dialog;
     }
+
 }

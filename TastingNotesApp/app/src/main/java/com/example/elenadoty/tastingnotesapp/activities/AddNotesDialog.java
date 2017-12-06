@@ -48,8 +48,8 @@ public class AddNotesDialog extends DialogFragment {
                         EditText editText =
                                 getDialog().findViewById(R.id.dialog_enterName);
                         if (!TextUtils.isEmpty(editText.getText())) {
-                            String newName = editText.getText().toString();
-                            AddNoteActivity.noteNotes = newName;
+                            String notes = editText.getText().toString();
+                            AddNoteActivity.addNotes(notes);
                             dialog.dismiss();
 
                         } else {
