@@ -41,6 +41,7 @@ import java.util.UUID;
 
 public class MainScreen extends AppCompatActivity implements OnMapReadyCallback {
 
+    public static final String TAB_NUM = "tab_num";
     private TextView tvWelcome;
     private GoogleMap mMap;
     FirebaseDatabase database;
@@ -73,8 +74,25 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.navigation_home).callOnClick();
+        if(savedInstanceState != null && savedInstanceState.containsKey(TAB_NUM)){
+            int navID = Integer.parseInt(savedInstanceState.get(TAB_NUM).toString());
+            findViewById(navID).callOnClick();
+        } else {
+            findViewById(R.id.navigation_home).callOnClick();
+        }
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        outState.putString(TAB_NUM, ""+navigation.getSelectedItemId());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
