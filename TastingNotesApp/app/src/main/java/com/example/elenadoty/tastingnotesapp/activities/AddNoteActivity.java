@@ -110,7 +110,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         VoronoiView voronoiView = (VoronoiView) findViewById(R.id.voronoi_view);
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             RelativeLayout rl = (RelativeLayout) layoutInflater.inflate(R.layout.item_voronoi, null, false);
             final KenBurnsView viewToAdd = (KenBurnsView) rl.findViewById(R.id.image_voronoi);
 
@@ -176,6 +176,14 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                             viewToAdd.setEnabled(false);
 
                             break;
+
+                        case 6:
+                            //category
+                            android.support.v4.app.DialogFragment newCategoryFragment = new CategoryDialog();
+                            newCategoryFragment.show(getSupportFragmentManager(), "category_fragment");
+                            viewToAdd.setImageResource(R.drawable.prop_done_icon);
+                            viewToAdd.setEnabled(false);
+
                         default:
                             break;
                     }
@@ -199,6 +207,8 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                 case 5:
                     viewToAdd.setImageResource(R.drawable.camera);
                     break;
+                case 6:
+                    viewToAdd.setImageResource(R.drawable.cancel_icon);
                 case 0:
                     viewToAdd.setImageResource(R.drawable.descriptions);
                     break;
@@ -219,6 +229,10 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
 
     public static void addDate(NoteDate date){
         newEntry.setNoteDate(date);
+    }
+
+    public static void addCategory(String category){
+        newEntry.setNoteCategory(category);
     }
 
     private void setRatingOnClick() {
