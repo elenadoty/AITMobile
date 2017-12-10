@@ -94,10 +94,6 @@ public class BaseEntry {
         return coordinates;
     }
 
-    /*public LatLng getLatLng(){
-        return new LatLng(coordinates.getLatitude(), coordinates.getLongitude());
-    }*/
-
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }

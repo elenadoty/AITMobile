@@ -37,13 +37,21 @@ public class CategoryDialog extends DialogFragment {
                     }
                 });
 
-        final AlertDialog dialog = builder.create();
+        final AlertDialog alertDialog = builder.create();
+
+
 
         // Create the AlertDialog object and return it
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
             @Override
             public void onShow(final DialogInterface dialog) {
+
+                spCategory = alertDialog.findViewById(R.id.spCategory);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                        R.array.category_array, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spCategory.setAdapter(adapter);
 
                 Button button = ((AlertDialog) dialog)
                         .getButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE);
@@ -51,7 +59,7 @@ public class CategoryDialog extends DialogFragment {
 
                     @Override
                     public void onClick(View view) {
-                        spCategory = (Spinner) getDialog().findViewById(R.id.spCategory);
+
                         ArrayAdapter<CharSequence> spinnerAdapter =
                                 ArrayAdapter.createFromResource(getContext(),
                                 R.array.category_array, android.R.layout.simple_spinner_item);
@@ -69,7 +77,7 @@ public class CategoryDialog extends DialogFragment {
                 });
             }
         });
-        return dialog;
+        return alertDialog;
     }
 
 }
