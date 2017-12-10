@@ -1,13 +1,17 @@
 package com.example.elenadoty.tastingnotesapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.elenadoty.tastingnotesapp.R;
 import com.example.elenadoty.tastingnotesapp.adapter.NoteAdapter;
@@ -25,6 +29,8 @@ public class MyPostsActivity extends Fragment {
     private NoteAdapter adapter;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
+    private View rootView;
+    private ImageButton btnAdd;
 
     @Nullable
     @Override
@@ -37,6 +43,18 @@ public class MyPostsActivity extends Fragment {
 
         createRecyclerView(rootView);
         initUserPostListener();
+        this.rootView = rootView;
+
+        btnAdd = (ImageButton) rootView.findViewById(R.id.addNoMyPosts);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("buttonstuff", "button clicked");
+                Intent intent = new Intent(getActivity(), AddNoteActivity.class);
+                intent.putExtra("userID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                startActivity(intent);
+            }
+        });
 
         return rootView;
 
@@ -52,6 +70,8 @@ public class MyPostsActivity extends Fragment {
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        adapter.updateBackground(rootView);
     }
 
 
@@ -66,6 +86,7 @@ public class MyPostsActivity extends Fragment {
                 ((MainScreen)getContext()).addMapMarker(new LatLng(
                         newEntry.getCoordinates().getLatitude(),
                         newEntry.getCoordinates().getLongitude()));
+                adapter.updateBackground(rootView);
             }
 
             @Override
@@ -80,6 +101,7 @@ public class MyPostsActivity extends Fragment {
                 ((MainScreen)getContext()).removeMarker(new LatLng(
                         newEntry.getCoordinates().getLatitude(),
                         newEntry.getCoordinates().getLongitude()));
+                adapter.updateBackground(rootView);
             }
 
             @Override

@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.elenadoty.tastingnotesapp.R;
 import com.example.elenadoty.tastingnotesapp.activities.DetailsActivity;
 import com.example.elenadoty.tastingnotesapp.activities.MainScreen;
+import com.example.elenadoty.tastingnotesapp.activities.MyPostsActivity;
 import com.example.elenadoty.tastingnotesapp.data.BaseEntry;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,13 +48,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
         entryKeys = new ArrayList<>();
 
         entryRef = FirebaseDatabase.getInstance().getReference();
-
     }
 
     public void addNote(BaseEntry newNote, String key){
         entryList.add(newNote);
         entryKeys.add(key);
         notifyDataSetChanged();
+        //updateBackground();
     }
 
     @Override
@@ -125,6 +126,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
             entryList.remove(index);
             entryKeys.remove(index);
             notifyItemRemoved(index);
+            //updateBackground();
         }
     }
 
@@ -132,6 +134,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
         entryList = new ArrayList<>();
         entryKeys = new ArrayList<>();
         notifyDataSetChanged();
+        //updateBackground();
     }
 
     @Override
@@ -154,6 +157,29 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
             entryName = itemView.findViewById(R.id.tvEntryName);
             entryLocation = itemView.findViewById(R.id.tvEntryLocation);
             tvUserName = itemView.findViewById(R.id.tvUserNameForum);
+        }
+    }
+
+    public void updateBackground(View view){
+        if(entryList.isEmpty()) {
+            if (postsType == MY_POSTS) {
+                view.findViewById(R.id.imageEmptyMyPosts)
+                        .setVisibility(View.VISIBLE);
+            }
+            if (postsType == ALL_POSTS) {
+                view.findViewById(R.id.imageEmptyForum)
+                        .setVisibility(View.VISIBLE);
+            }
+        }
+        else {
+            if(postsType == MY_POSTS) {
+                view.findViewById(R.id.imageEmptyMyPosts)
+                        .setVisibility(View.GONE);
+            }
+            if(postsType == ALL_POSTS){
+                view.findViewById(R.id.imageEmptyForum)
+                        .setVisibility(View.GONE);
+            }
         }
     }
 }

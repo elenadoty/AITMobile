@@ -26,6 +26,7 @@ public class ForumActivity extends Fragment {
     private NoteAdapter adapter;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
+    private View rootView;
 
     @Nullable
     @Override
@@ -38,7 +39,7 @@ public class ForumActivity extends Fragment {
 
         createRecyclerView(rootView);
         initUserAllPostListener();
-
+        this.rootView = rootView;
         return rootView;
 
     }
@@ -53,6 +54,7 @@ public class ForumActivity extends Fragment {
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        adapter.updateBackground(rootView);
     }
 
     private void initUserAllPostListener(){
@@ -63,6 +65,7 @@ public class ForumActivity extends Fragment {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                         BaseEntry newEntry = eventSnapshot.getValue(BaseEntry.class);
                         adapter.addNote(newEntry, newEntry.getDatabaseID());
+                        adapter.updateBackground(rootView);
                 }
             }
 
@@ -72,6 +75,7 @@ public class ForumActivity extends Fragment {
                     BaseEntry newEntry = eventSnapshot.getValue(BaseEntry.class);
                     adapter.removePostByKey(newEntry.getDatabaseID());
                     adapter.addNote(newEntry, newEntry.getDatabaseID());
+                    adapter.updateBackground(rootView);
                 }
             }
 
@@ -80,6 +84,7 @@ public class ForumActivity extends Fragment {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     BaseEntry newEntry = eventSnapshot.getValue(BaseEntry.class);
                     adapter.removePostByKey(newEntry.getDatabaseID());
+                    adapter.updateBackground(rootView);
                 }
             }
 
