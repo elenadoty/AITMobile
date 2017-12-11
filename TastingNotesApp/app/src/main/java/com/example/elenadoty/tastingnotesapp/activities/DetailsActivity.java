@@ -127,6 +127,8 @@ public class DetailsActivity extends AppCompatActivity {
 
         ((TextView)findViewById(R.id.tvFragmentName))
                     .setText(currentEntry.getNoteName());
+        ((TextView)findViewById(R.id.tvFragmentCategory))
+                    .setText(currentEntry.getNoteCategory());
         ((TextView)findViewById(R.id.tvFragmentDateLocation))
                 .setText(currentEntry.getNoteDate().toString() + ", "
                         + currentEntry.getPlaceName());

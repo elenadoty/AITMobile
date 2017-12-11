@@ -32,12 +32,24 @@
     <me.grantland.widget.AutofitTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvFragmentName"
+        android:id="@+id/tvFragmentCategory"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="CATEGORY: category"
+        android:maxLines="1"
+        android:textSize="22sp" />
+
+    <me.grantland.widget.AutofitTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/tvFragmentDateLocation"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:text="Date, at location"
         android:maxLines="2"
-        android:layout_below="@+id/tvFragmentName"
+        android:layout_below="@+id/tvFragmentCategory"
         android:padding="10dp"
         android:textSize="22sp"
         />
