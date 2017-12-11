@@ -24,14 +24,13 @@ public class BaseEntry {
     private int noteRating;
 
     public BaseEntry(String noteName, String noteNotes, Coordinates coordinates, String placeName,
-                     NoteDate noteDate, int noteType, int noteRating,
+                     NoteDate noteDate, int noteRating,
                      String databaseID, String imageURL, String userID, String userName, String noteCategory) {
         this.noteName = noteName;
         this.noteNotes = noteNotes;
         this.placeName = placeName;
         this.noteDate = noteDate;
         this.coordinates = coordinates;
-        this.noteType = noteType;
         this.databaseID = databaseID;
         this.noteRating = noteRating;
         this.imageURL = imageURL;
@@ -72,14 +71,6 @@ public class BaseEntry {
 
     public void setNoteDate(NoteDate noteDate) {
         this.noteDate = noteDate;
-    }
-
-    public int getNoteType() {
-        return noteType;
-    }
-
-    public void setNoteType(int noteType) {
-        this.noteType = noteType;
     }
 
     public String getDatabaseID() {
