@@ -37,17 +37,7 @@
         android:id="@+id/imageEmptyMyPosts"
         android:layout_below="@id/tvWelcome">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo"
-            android:visibility="visible"
-            android:scaleX = "3.5"
-            android:scaleY="3.5"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
-            android:id="@+id/tsImageMyPosts"/>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,9 +45,9 @@
             android:layout_centerHorizontal="true"
             android:text="You have no notes yet! \nClick the plus to add one."
             android:textSize="30sp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="80dp"
             android:textAlignment="center"
-            android:layout_below="@id/tsImageMyPosts"
+            android:layout_alignParentTop="true"
             android:id="@+id/tvNoMyPosts"/>
 
         <ImageButton
@@ -67,9 +57,9 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/tvNoMyPosts"
             android:layout_marginTop="20dp"
-            android:src="@drawable/toolbar_add_icon"
+            android:src="@drawable/empty_add_button_icon"
+            android:background="@color/white"
             android:scaleType="fitXY"
-            android:background="@android:color/holo_blue_dark"
             />
 
     </RelativeLayout>
