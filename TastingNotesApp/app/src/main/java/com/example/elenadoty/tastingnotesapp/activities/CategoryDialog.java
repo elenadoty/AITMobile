@@ -59,6 +59,7 @@ public class CategoryDialog extends DialogFragment {
 
                     @Override
                     public void onClick(View view) {
+                        final String category = spCategory.getSelectedItem().toString();
 
                         ArrayAdapter<CharSequence> spinnerAdapter =
                                 ArrayAdapter.createFromResource(getContext(),
@@ -68,7 +69,6 @@ public class CategoryDialog extends DialogFragment {
                         spCategory.setAdapter(spinnerAdapter);
 
                         if (spCategory.getSelectedItem() != null) {
-                            String category = spCategory.getSelectedItem().toString();
                             AddNoteActivity.addCategory(category);
                             dialog.dismiss();
 

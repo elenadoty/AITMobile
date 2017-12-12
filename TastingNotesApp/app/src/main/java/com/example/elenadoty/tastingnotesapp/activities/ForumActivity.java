@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.elenadoty.tastingnotesapp.R;
 import com.example.elenadoty.tastingnotesapp.adapter.NoteAdapter;
@@ -28,6 +30,8 @@ public class ForumActivity extends Fragment {
     DatabaseReference databaseReference;
     private View rootView;
 
+    private Spinner spCategory;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -36,6 +40,23 @@ public class ForumActivity extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_forum, container, false);
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
+
+        spCategory = rootView.findViewById(R.id.spCategory);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.category_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCategory.setAdapter(adapter);
+
+        ArrayAdapter<CharSequence> spinnerAdapter =
+                ArrayAdapter.createFromResource(getContext(),
+                        R.array.category_array, android.R.layout.simple_spinner_item);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCategory.setAdapter(spinnerAdapter);
+
+        if (spCategory.getSelectedItem() == "Breakfast") {
+            //set items not labeled breakfast to gone
+        }
 
         createRecyclerView(rootView);
         initUserAllPostListener();
@@ -97,6 +118,9 @@ public class ForumActivity extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
+
         });
+
     }
 }
