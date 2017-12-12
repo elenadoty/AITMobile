@@ -54,10 +54,6 @@ public class ForumActivity extends Fragment {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(spinnerAdapter);
 
-        if (spCategory.getSelectedItem() == "Breakfast") {
-            //set items not labeled breakfast to gone
-        }
-
         createRecyclerView(rootView);
         initUserAllPostListener();
         this.rootView = rootView;

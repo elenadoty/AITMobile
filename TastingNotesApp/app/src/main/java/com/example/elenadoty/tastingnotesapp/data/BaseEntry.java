@@ -129,4 +129,6 @@ public class BaseEntry {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public int getNoteType() {return noteType;}
 }

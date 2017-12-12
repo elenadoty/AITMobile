@@ -160,6 +160,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
         }
     }
 
+    public void filterByCategory(String category){
+        if (postsType == ALL_POSTS) {
+            for (int i = 0; i < entryList.size(); i++) {
+                if (!((entryList.get(i).getNoteCategory()).equals(category))){
+                    
+                }
+            }
+        }
+    }
+
     public void updateBackground(View view){
         if(entryList.isEmpty()) {
             if (postsType == MY_POSTS) {
