@@ -10,18 +10,17 @@ import java.util.Date;
 
 public class BaseEntry {
 
-    private String noteName;
-    private String noteNotes;
-    private String noteCategory;
-    private NoteDate noteDate;
-    private int noteType;
-    private Coordinates coordinates;
+    private String noteName = "unnamed";
+    private String noteNotes = "[no notes recorded]";
+    private String noteCategory = "other";
+    private NoteDate noteDate = new NoteDate(12, 25, 2017);
+    private Coordinates coordinates = new Coordinates(43.45410580000001, -80.49917839999999);
     private String userID;
-    private String placeName;
+    private String placeName = "Google";
     private String databaseID;
     private String imageURL;
     private String userName;
-    private int noteRating;
+    private int noteRating = 5;
 
     public BaseEntry(String noteName, String noteNotes, Coordinates coordinates, String placeName,
                      NoteDate noteDate, int noteRating,
@@ -130,5 +129,4 @@ public class BaseEntry {
         this.userName = userName;
     }
 
-    public int getNoteType() {return noteType;}
 }

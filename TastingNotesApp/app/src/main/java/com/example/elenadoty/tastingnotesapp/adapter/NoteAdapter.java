@@ -54,7 +54,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
         entryList.add(newNote);
         entryKeys.add(key);
         notifyDataSetChanged();
-        //updateBackground();
     }
 
     @Override
@@ -126,7 +125,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
             entryList.remove(index);
             entryKeys.remove(index);
             notifyItemRemoved(index);
-            //updateBackground();
         }
     }
 
@@ -134,7 +132,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
         entryList = new ArrayList<>();
         entryKeys = new ArrayList<>();
         notifyDataSetChanged();
-        //updateBackground();
     }
 
     @Override
