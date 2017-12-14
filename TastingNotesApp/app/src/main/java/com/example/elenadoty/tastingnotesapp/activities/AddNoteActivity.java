@@ -88,7 +88,6 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: check the note is complete, or set defaults
                 try {
                     uploadImage();
                 } catch (Exception e) {
@@ -119,6 +118,15 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                 @Override
                 public void onClick(View view) {
                     switch (j) {
+                        case 0:
+                            //name
+                            android.support.v4.app.DialogFragment newNameFragment = new NameDialog();
+                            newNameFragment.show(getSupportFragmentManager(), "name_fragment");
+                            viewToAdd.setImageResource(R.drawable.prop_done_icon);
+                            viewToAdd.setEnabled(false);
+
+                            break;
+
                         case 1:
                             //set calendar
                             DialogFragment newFragment = new DatePickerFragment();
@@ -161,14 +169,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                             viewToAdd.setEnabled(false);
 
                             break;
-                        case 0:
-                            //name
-                            android.support.v4.app.DialogFragment newNameFragment = new NameDialog();
-                            newNameFragment.show(getSupportFragmentManager(), "name_fragment");
-                            viewToAdd.setImageResource(R.drawable.prop_done_icon);
-                            viewToAdd.setEnabled(false);
 
-                            break;
                         case 5:
                             //camera stuff
                             requestNeededPermission();
@@ -240,7 +241,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newEntry.setNoteRating(1);//rating = 1;
+                newEntry.setNoteRating(1);
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -250,7 +251,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newEntry.setNoteRating(2);//rating = 2;
+                newEntry.setNoteRating(2);
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -260,7 +261,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newEntry.setNoteRating(3);//rating = 3;
+                newEntry.setNoteRating(3);
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -270,7 +271,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newEntry.setNoteRating(4);//rating = 4;
+                newEntry.setNoteRating(4);
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -280,7 +281,7 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         rating5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newEntry.setNoteRating(5);//rating = 5;
+                newEntry.setNoteRating(5);
                 findViewById(R.id.contentAddNote).setAlpha((float)1);
                 findViewById(R.id.fragmentFabDoneAdd).setAlpha((float)1);
                 findViewById(R.id.ratingsIncluded).setVisibility(View.GONE);
@@ -316,36 +317,40 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
         databaseReference.child("posts").child(userID)
                 .child(newEntry.getDatabaseID()).setValue(newEntry);
 
-        //databaseReference.child("dates").child(userID)
-          //      .setValue(newEntry.getNoteDate());
     }
 
     private void uploadImage() throws Exception{
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        imageAsBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageInBytes = baos.toByteArray();
+        if(imageAsBitmap != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageAsBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageInBytes = baos.toByteArray();
 
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        String newImage = URLEncoder.encode(UUID.randomUUID().toString(), "UTF-8")+".jpg";
-        StorageReference newImageRef = storageRef.child(newImage);
-        StorageReference newImageImagesRef = storageRef.child("images/"+newImage);
-        newImageRef.getName().equals(newImageImagesRef.getName());    // true
-        newImageRef.getPath().equals(newImageImagesRef.getPath());    // false
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            String newImage = URLEncoder.encode(UUID.randomUUID().toString(), "UTF-8") + ".jpg";
+            StorageReference newImageRef = storageRef.child(newImage);
+            StorageReference newImageImagesRef = storageRef.child("images/" + newImage);
+            newImageRef.getName().equals(newImageImagesRef.getName());
+            newImageRef.getPath().equals(newImageImagesRef.getPath());
 
-        UploadTask uploadTask = newImageImagesRef.putBytes(imageInBytes);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Log.d("imagestuff", "not uploaded");
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                newEntry.setImageURL(taskSnapshot.getDownloadUrl().toString());
-                uploadNote();
-            }
-        });
+            UploadTask uploadTask = newImageImagesRef.putBytes(imageInBytes);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    newEntry.setImageURL("https://firebasestorage.googleapis.com/v0/b/tastingnotes-b10cd.appspot.com/o/images%2Fgourmet_food.png?alt=media&token=0dc128d3-56e9-44f4-ba57-2f8c332a093e");
+                    uploadNote();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    newEntry.setImageURL(taskSnapshot.getDownloadUrl().toString());
+                    uploadNote();
+                }
+            });
+        }
+        else {
+            newEntry.setImageURL("https://firebasestorage.googleapis.com/v0/b/tastingnotes-b10cd.appspot.com/o/images%2Fgourmet_food.png?alt=media&token=0dc128d3-56e9-44f4-ba57-2f8c332a093e");
+            uploadNote();
+        }
     }
 
 
@@ -361,14 +366,12 @@ public class AddNoteActivity extends AppCompatActivity implements OnConnectionFa
                 PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     android.Manifest.permission.CAMERA)) {
-                // Toast...
             }
 
             ActivityCompat.requestPermissions(this, new String[]{
                             android.Manifest.permission.CAMERA},
                     REQUEST_CODE_CAMERA);
         } else {
-            // we have the permission
             Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(takePicture, REQUEST_CODE_CAMERA);
         }

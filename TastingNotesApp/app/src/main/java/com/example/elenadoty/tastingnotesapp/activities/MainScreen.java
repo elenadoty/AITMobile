@@ -48,6 +48,7 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
     DatabaseReference databaseReference;
     DatabaseReference locationReference;
     ArrayList<LatLng> markers = new ArrayList<>();
+    ArrayList<String> names = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +145,7 @@ public class MainScreen extends AppCompatActivity implements OnMapReadyCallback 
                 cameraPosition));*/
         //mMap.setMinZoomPreference(20);
     }
-    //TODO: is this needed, and is it a problem??
+
     public void addMapMarker(LatLng markerToAdd){
         markers.add(markerToAdd);
         updateMapMarkers();
