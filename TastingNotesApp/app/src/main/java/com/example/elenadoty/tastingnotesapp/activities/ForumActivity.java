@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -29,6 +30,7 @@ public class ForumActivity extends Fragment {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     private View rootView;
+    private RecyclerView recyclerView;
 
     private Spinner spCategory;
 
@@ -42,19 +44,34 @@ public class ForumActivity extends Fragment {
         databaseReference = database.getReference();
 
         spCategory = rootView.findViewById(R.id.spCategory);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.category_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spCategory.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(getContext(),
+                R.array.category_array2, android.R.layout.simple_spinner_item);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCategory.setAdapter(adapterSpinner);
 
         ArrayAdapter<CharSequence> spinnerAdapter =
                 ArrayAdapter.createFromResource(getContext(),
-                        R.array.category_array, android.R.layout.simple_spinner_item);
+                        R.array.category_array2, android.R.layout.simple_spinner_item);
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(spinnerAdapter);
 
+        adapter = new NoteAdapter(getContext(), NoteAdapter.ALL_POSTS);
         createRecyclerView(rootView);
+
+        spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                adapter.setCategory(spCategory.getSelectedItem().toString());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         initUserAllPostListener();
         this.rootView = rootView;
         return rootView;
@@ -62,9 +79,8 @@ public class ForumActivity extends Fragment {
     }
 
     private void createRecyclerView(View rootView) {
-        adapter = new NoteAdapter(getContext(), NoteAdapter.ALL_POSTS);
 
-        RecyclerView recyclerView = rootView.findViewById(R.id.recyclerForumEntries);
+        recyclerView = rootView.findViewById(R.id.recyclerForumEntries);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setReverseLayout(true);
@@ -73,6 +89,7 @@ public class ForumActivity extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.updateBackground(rootView);
     }
+
 
     private void initUserAllPostListener(){
         DatabaseReference currentUserPostsReference = database.getReference("posts");
@@ -117,6 +134,5 @@ public class ForumActivity extends Fragment {
 
 
         });
-
     }
 }

@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +41,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
     public static final int ALL_POSTS = 1;
     private int postsType;
     private DatabaseReference entryRef;
+    private String category = "All";
 
     public NoteAdapter(Context context, int postsType) {
         this.context = context;
@@ -107,6 +110,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
             case 1:
                 holder.tvUserName.setText(baseEntry.getUserName());
                 holder.tvUserName.setVisibility(View.VISIBLE);
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)holder.itemView.getLayoutParams();
+                if(this.category.equals("All")) {
+                    holder.itemView.setVisibility(View.VISIBLE);
+                    params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                } else {
+                    if(!baseEntry.getNoteCategory().equals(this.category)) {
+                        holder.itemView.setVisibility(View.GONE);
+                        params.height = 0;
+                        params.setMargins(0, 0, 0, 0);
+                        holder.itemView.setLayoutParams(params);
+                    }
+                }
                 break;
             default: break;
         }
@@ -160,16 +175,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
         }
     }
 
-    public void filterByCategory(String category){
-        if (postsType == ALL_POSTS) {
-            for (int i = 0; i < entryList.size(); i++) {
-                if (!((entryList.get(i).getNoteCategory()).equals(category))){
-                    
-                }
-            }
-        }
-    }
-
     public void updateBackground(View view){
         if(entryList.isEmpty()) {
             if (postsType == MY_POSTS) {
@@ -191,5 +196,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
                         .setVisibility(View.GONE);
             }
         }
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
